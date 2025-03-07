@@ -1,10 +1,12 @@
 const bird = document.getElementById("bird");
+const pillars = document.querySelector('.pillars');
+const gravity = .5;
 let dead = false;
 let lastTime = 0;
 let positionY = 0;
 let keydown = false;
-const gravity = .5;
 let velocity = 0;
+let pillarPositionX = 0;
 
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
@@ -23,7 +25,8 @@ function fall(timestamp) {
         velocity += gravity;
         positionY += velocity * deltaTime * 0.05;
         bird.style.transform = `translateY(${positionY}px)`
-
+        pillarPositionX -= 10 * deltaTime * 0.05;
+        pillars.style.transform = `translateX(${pillarPositionX}px)`
         requestAnimationFrame(fall);
 
     } else {
