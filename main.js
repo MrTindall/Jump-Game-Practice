@@ -1,5 +1,6 @@
 let dead = false;
 let keydown = false;
+let startGame = false;
 
 let lastTime = 0;
 let positionY = 0;
@@ -25,7 +26,12 @@ function gameLoop(timestamp) {
     }
 
     if (!dead) {
-        velocity += gravity;
+        if(!startGame) {
+            velocity = 0;
+        } else {
+            velocity += gravity;
+        }
+        
         positionY += velocity * deltaTime * 0.05;
         bird.style.transform = `translateY(${positionY}px)`;
 
@@ -73,24 +79,35 @@ function gameLoop(timestamp) {
         requestAnimationFrame(gameLoop);
     // resets after die
     } else {
+
         positionY = 0;
         velocity = 0;
         scoreValue = 0;
         bird.style.transform = `translateY(${positionY}px)`;
-        dead = false;
         resetPillars();
-        requestAnimationFrame(gameLoop);
+        startGame = false;
+        if (startGame) {
+            dead = false;
+            requestAnimationFrame(gameLoop);
+        }
+
     }
 }
 
 requestAnimationFrame(gameLoop);
 
+
 // player controls
 document.addEventListener('keydown', function (event) {
-    if (event.code === 'Space' && !keydown) {
-        velocity = -10;
-        keydown = true;
+    if (startGame) {
+        if (event.code === 'Space' && !keydown) {
+            velocity = -10;
+            keydown = true;
+        }
+    } else {
+        startGame = true;
     }
+    
 });
 
 document.addEventListener('keyup', function (event) {
