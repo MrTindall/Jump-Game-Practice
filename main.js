@@ -21,14 +21,12 @@ function gameLoop(timestamp) {
     }
 
     if (!dead) {
-        // applied gravity for bird
         velocity += gravity;
         positionY += velocity * deltaTime * 0.05;
         bird.style.transform = `translateY(${positionY}px)`;
 
-        // automatic pillar movement
+        // moves each pillar from right to left
         pillars.forEach(pillar => {
-
             const pillarTop = document.querySelector('.pillar-top');
             const pillarBottom = document.querySelector('.pillar-bottom');
 
@@ -38,12 +36,13 @@ function gameLoop(timestamp) {
             pillar.pillarPositionX -= 10 * deltaTime * 0.05;
             pillar.style.transform = `translateX(${pillar.pillarPositionX}px)`;
 
-            // If pillar moves off-screen, reset it
+            // if pillar moves off-screen, reset it
             if (pillar.pillarPositionX < -pillar.offsetWidth) {
                 pillar.remove();
                 pillars = pillars.filter(p => p !== pillar); 
             }
 
+            // checks player rect against pillar top or bottom rect
             if (
                 rect.top < pillarTopRect.bottom &&
                 rect.bottom > pillarTopRect.top &&
@@ -54,23 +53,25 @@ function gameLoop(timestamp) {
                 rect.left < pillarBottomRect.right &&
                 rect.right > pillarBottomRect.left
             ) {
-                dead = true;  // The elements overlap, so consider it a "collision"
+                dead = true;
             }
         });
 
         requestAnimationFrame(gameLoop);
+    // resets after die
     } else {
         positionY = 0;
         velocity = 0;
         bird.style.transform = `translateY(${positionY}px)`;
         dead = false;
-        resetPillars();  // Reset pillars when the game restarts
+        resetPillars();
         requestAnimationFrame(gameLoop);
     }
 }
 
 requestAnimationFrame(gameLoop);
 
+// player controls
 document.addEventListener('keydown', function (event) {
     if (event.code === 'Space' && !keydown) {
         velocity = -10;
@@ -84,6 +85,7 @@ document.addEventListener('keyup', function (event) {
     }
 });
 
+// creates a new div element with random heights and adds it to pillars array
 function createPillars() {
     let pillar = document.createElement('div');
     pillar.pillarPositionX = window.innerWidth;
@@ -109,26 +111,28 @@ function createPillars() {
     pillars.push(pillar);
 }
 
-
+// starts creating pillars every 1.5 seconds
 function startInterval() {
     if (!intervalId) {
         intervalId = setInterval(createPillars, 1500);
     }
 }
 
+// clears and resets start interval 
 function resetInterval() {
     clearInterval(intervalId);
     intervalId = null;
     startInterval();
 }
 
+// clears pillars array at death
 function resetPillars() {
-    // Clear all existing pillars when the game is reset
     pillars.forEach(pillar => pillar.remove());
     pillars = [];
     resetInterval();
 }
 
+// calls reset interval every 1.5 seconds
 setTimeout(() => {
     resetInterval();
 }, 1500);
