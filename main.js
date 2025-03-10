@@ -16,28 +16,28 @@ const gravity = .5;
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
 
+requestAnimationFrame(gameLoop);
+
+// Game loop
 function gameLoop(timestamp) {
     let deltaTime = timestamp - lastTime;
     lastTime = timestamp;
     const rect = bird.getBoundingClientRect();
 
+    // Check for bird death (out of bounds)
     if (rect.bottom > windowHeight || rect.bottom < 0) {
         dead = true;
     }
 
     if (!dead) {
-        if(!startGame) {
-            velocity = 0;
-        } else {
+        if (startGame) {
             velocity += gravity;
+            positionY += velocity * deltaTime * 0.05;
+            bird.style.transform = `translateY(${positionY}px)`;
         }
-        
-        positionY += velocity * deltaTime * 0.05;
-        bird.style.transform = `translateY(${positionY}px)`;
 
         score.innerHTML = `${scoreValue}`;
 
-        // moves each pillar from right to left
         pillars.forEach(pillar => {
             const pillarTop = document.querySelector('.pillar-top');
             const pillarBottom = document.querySelector('.pillar-bottom');
@@ -48,66 +48,61 @@ function gameLoop(timestamp) {
             pillar.pillarPositionX -= 10 * deltaTime * 0.05;
             pillar.style.transform = `translateX(${pillar.pillarPositionX}px)`;
 
-            // if pillar moves off-screen, reset it
+            // Remove pillar when it's off-screen
             if (pillar.pillarPositionX < -pillar.offsetWidth) {
                 pillar.remove();
-                pillars = pillars.filter(p => p !== pillar); 
+                pillars = pillars.filter(p => p !== pillar);
             }
 
-            // checks player rect against pillar top or bottom rect
+            // Collision detection with pillars
             if (
-                rect.top < pillarTopRect.bottom &&
-                rect.bottom > pillarTopRect.top &&
-                rect.left < pillarTopRect.right &&
-                rect.right > pillarTopRect.left || 
-                rect.top < pillarBottomRect.bottom &&
-                rect.bottom > pillarBottomRect.top &&
-                rect.left < pillarBottomRect.right &&
-                rect.right > pillarBottomRect.left
+                (rect.top < pillarTopRect.bottom &&
+                    rect.bottom > pillarTopRect.top &&
+                    rect.left < pillarTopRect.right &&
+                    rect.right > pillarTopRect.left) ||
+                (rect.top < pillarBottomRect.bottom &&
+                    rect.bottom > pillarBottomRect.top &&
+                    rect.left < pillarBottomRect.right &&
+                    rect.right > pillarBottomRect.left)
             ) {
                 dead = true;
             }
 
+            // Score for passing pillars
             if (pillar.pillarPositionX < rect.bottom) {
-                if(!pillar.pillarPassed){
+                if (!pillar.pillarPassed) {
                     scoreValue += 1;
                 }
                 pillar.pillarPassed = true;
             }
         });
+    }
 
-        requestAnimationFrame(gameLoop);
-    // resets after die
-    } else {
-
+    // Game over reset
+    if (dead) {
         positionY = 0;
         velocity = 0;
         scoreValue = 0;
         bird.style.transform = `translateY(${positionY}px)`;
         resetPillars();
         startGame = false;
-        if (startGame) {
-            dead = false;
-            requestAnimationFrame(gameLoop);
-        }
-
+        dead = false;
     }
+
+    // Always keep the loop running
+    requestAnimationFrame(gameLoop);
 }
 
-requestAnimationFrame(gameLoop);
-
-
-// player controls
+// Player controls (keydown and keyup)
 document.addEventListener('keydown', function (event) {
-    if (startGame) {
-        if (event.code === 'Space' && !keydown) {
-            velocity = -10;
-            keydown = true;
-        }
-    } else {
+    if (!startGame && event.code === 'Space') {
         startGame = true;
+        velocity = -10;
+        startInterval(); // Start pillar creation
+    } else if (startGame && event.code === 'Space' && !keydown) {
+        velocity = -10;
+        keydown = true;
     }
-    
 });
 
 document.addEventListener('keyup', function (event) {
@@ -116,12 +111,11 @@ document.addEventListener('keyup', function (event) {
     }
 });
 
-// creates a new div element with random heights and adds it to pillars array
+// Creates a new pillar with random height
 function createPillars() {
     let pillar = document.createElement('div');
     pillar.pillarPositionX = window.innerWidth;
     let pillarOffset = Math.round((Math.sign(Math.random() - 0.5) * Math.random()) * 20);
-    console.log(pillarOffset);
 
     pillar.classList.add('pillars');
     pillar.innerHTML = `
@@ -143,28 +137,33 @@ function createPillars() {
     pillars.push(pillar);
 }
 
-// starts creating pillars every 1.5 seconds
+// Starts creating pillars every 1.5 seconds if the game is active
 function startInterval() {
-    if (!intervalId) {
+    if (!intervalId && startGame) {
         intervalId = setInterval(createPillars, 1500);
     }
 }
 
-// clears and resets start interval 
+// Clears and resets the interval if the game is not active
 function resetInterval() {
     clearInterval(intervalId);
     intervalId = null;
-    startInterval();
+    if (startGame) {
+        startInterval();
+    }
 }
 
-// clears pillars array at death
+// Clears pillars array at death
 function resetPillars() {
     pillars.forEach(pillar => pillar.remove());
     pillars = [];
-    resetInterval();
+    clearInterval(intervalId); // Stop the pillar creation interval
+    intervalId = null; // Reset the interval ID
 }
 
-// calls reset interval every 1.5 seconds
+// Ensures pillars start creating every 1.5 seconds only when the game starts
 setTimeout(() => {
-    resetInterval();
+    if (startGame) {
+        resetInterval();
+    }
 }, 1500);
