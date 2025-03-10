@@ -82,13 +82,9 @@ function createPillars() {
     const pillarSpace = pillar.querySelector('.pillar-space');
     const pillarBottom = pillar.querySelector('.pillar-bottom');
 
-    const topOffset = pillarOffset + 40 + 'vh';
-    const spaceOffset = pillarOffset + 40 + 'vh';
-    const bottomOffset = 40 - pillarOffset  + 'vh';
-
-    pillarTop.style.height = topOffset;
-    pillarSpace.style.height = spaceOffset;
-    pillarBottom.style.height = bottomOffset;
+    pillarTop.style.height = pillarOffset + 40 + 'vh';
+    pillarSpace.style.height = pillarOffset + 40 + 'vh';
+    pillarBottom.style.height = 40 - pillarOffset + 'vh';
 
     document.body.appendChild(pillar);
     pillars.push(pillar);
