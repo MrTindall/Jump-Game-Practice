@@ -1,11 +1,15 @@
 let dead = false;
+let keydown = false;
+
 let lastTime = 0;
 let positionY = 0;
-let keydown = false;
 let velocity = 0;
-let intervalId;
-let pillars = [];
+let scoreValue = 0;
 
+let pillars = [];
+let intervalId;
+
+const score = document.getElementById('score');
 const bird = document.getElementById("bird");
 const gravity = .5;
 const windowWidth = window.innerWidth;
@@ -24,6 +28,8 @@ function gameLoop(timestamp) {
         velocity += gravity;
         positionY += velocity * deltaTime * 0.05;
         bird.style.transform = `translateY(${positionY}px)`;
+
+        score.innerHTML = `${scoreValue}`;
 
         // moves each pillar from right to left
         pillars.forEach(pillar => {
@@ -55,6 +61,13 @@ function gameLoop(timestamp) {
             ) {
                 dead = true;
             }
+
+            if (pillar.pillarPositionX < rect.bottom) {
+                if(!pillar.pillarPassed){
+                    scoreValue += 1;
+                }
+                pillar.pillarPassed = true;
+            }
         });
 
         requestAnimationFrame(gameLoop);
@@ -62,6 +75,7 @@ function gameLoop(timestamp) {
     } else {
         positionY = 0;
         velocity = 0;
+        scoreValue = 0;
         bird.style.transform = `translateY(${positionY}px)`;
         dead = false;
         resetPillars();
@@ -106,6 +120,7 @@ function createPillars() {
     pillarTop.style.height = pillarOffset + 40 + 'vh';
     pillarSpace.style.height = pillarOffset + 40 + 'vh';
     pillarBottom.style.height = 40 - pillarOffset + 'vh';
+    let pillarPassed = false;
 
     document.body.appendChild(pillar);
     pillars.push(pillar);

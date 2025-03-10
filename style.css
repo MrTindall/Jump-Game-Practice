@@ -24,6 +24,17 @@
     overflow: hidden;
 }
 
+#score {
+position: absolute;
+    top: 10%;
+    left: 50%;
+    z-index: 10;
+    color: black;
+    transform: translateX(-50%);
+    font-weight: 600;
+    font-size: 3.0rem;
+}   
+
 #bird {
     position: absolute;
     top: 40%;
