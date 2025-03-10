@@ -98,7 +98,7 @@ document.addEventListener('keydown', function (event) {
     if (!startGame && event.code === 'Space') {
         startGame = true;
         velocity = -10;
-        startInterval(); // Start pillar creation
+        startInterval();
     } else if (startGame && event.code === 'Space' && !keydown) {
         velocity = -10;
         keydown = true;
@@ -157,8 +157,8 @@ function resetInterval() {
 function resetPillars() {
     pillars.forEach(pillar => pillar.remove());
     pillars = [];
-    clearInterval(intervalId); // Stop the pillar creation interval
-    intervalId = null; // Reset the interval ID
+    clearInterval(intervalId);
+    intervalId = null;
 }
 
 // Ensures pillars start creating every 1.5 seconds only when the game starts
