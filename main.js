@@ -1,5 +1,3 @@
-const bird = document.getElementById("bird");
-const gravity = .5;
 let dead = false;
 let lastTime = 0;
 let positionY = 0;
@@ -8,9 +6,10 @@ let velocity = 0;
 let intervalId;
 let pillars = [];
 
+const bird = document.getElementById("bird");
+const gravity = .5;
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
-console.log(windowHeight);
 
 function gameLoop(timestamp) {
     let deltaTime = timestamp - lastTime;
