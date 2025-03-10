@@ -29,13 +29,33 @@ function gameLoop(timestamp) {
 
         // automatic pillar movement
         pillars.forEach(pillar => {
+
+            const pillarTop = document.querySelector('.pillar-top');
+            const pillarBottom = document.querySelector('.pillar-bottom');
+
+            const pillarTopRect = pillarTop.getBoundingClientRect();
+            const pillarBottomRect = pillarBottom.getBoundingClientRect();
+
             pillar.pillarPositionX -= 10 * deltaTime * 0.05;
             pillar.style.transform = `translateX(${pillar.pillarPositionX}px)`;
 
             // If pillar moves off-screen, reset it
             if (pillar.pillarPositionX < -pillar.offsetWidth) {
                 pillar.remove();
-                pillars = pillars.filter(p => p !== pillar);  // Remove from pillars array
+                pillars = pillars.filter(p => p !== pillar); 
+            }
+
+            if (
+                rect.top < pillarTopRect.bottom &&
+                rect.bottom > pillarTopRect.top &&
+                rect.left < pillarTopRect.right &&
+                rect.right > pillarTopRect.left || 
+                rect.top < pillarBottomRect.bottom &&
+                rect.bottom > pillarBottomRect.top &&
+                rect.left < pillarBottomRect.right &&
+                rect.right > pillarBottomRect.left
+            ) {
+                dead = true;  // The elements overlap, so consider it a "collision"
             }
         });
 
