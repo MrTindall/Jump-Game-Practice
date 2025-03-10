@@ -68,7 +68,7 @@ document.addEventListener('keyup', function (event) {
 function createPillars() {
     let pillar = document.createElement('div');
     pillar.pillarPositionX = window.innerWidth;
-    let pillarOffset = Math.round((Math.sign(Math.random() - 0.5) * Math.random()) * 40);
+    let pillarOffset = Math.round((Math.sign(Math.random() - 0.5) * Math.random()) * 20);
     console.log(pillarOffset);
 
     pillar.classList.add('pillars');
@@ -97,7 +97,7 @@ function createPillars() {
 
 function startInterval() {
     if (!intervalId) {
-        intervalId = setInterval(createPillars, 1000);
+        intervalId = setInterval(createPillars, 1500);
     }
 }
 
