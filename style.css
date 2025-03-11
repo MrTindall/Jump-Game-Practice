@@ -49,7 +49,7 @@ html {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: rgb(28, 221, 255);
+    background-color: rgb(100, 255, 28);
 }
 
 .pillars {
@@ -61,7 +61,7 @@ html {
 }
 
 .pillar-top {
-    background-color: rgb(120, 0, 175);
+    background-color: rgb(155, 1, 226);
     position: absolute;
     top: 0;
     left: 0;
