@@ -4,6 +4,12 @@
     margin: 0;
 }
 
+body,
+html {
+    margin: 0;
+    overflow: hidden;
+}
+
 .background {
     background-color: rgb(27, 27, 27);
     width: 100vw;
@@ -81,10 +87,4 @@
     .game-container {
         width: 95vw;
     }
-}
-
-body,
-html {
-    margin: 0;
-    overflow: hidden;
 }
