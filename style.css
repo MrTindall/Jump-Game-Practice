@@ -17,7 +17,7 @@
     top: 50%;
     width: 100vw;
     height: 100vh;
-    background-color: rgb(140, 222, 255);
+    background-color: rgb(43, 43, 43);
     border-radius: 8px;
     transform: translate(-50%, -50%);
     z-index: 3;
@@ -25,11 +25,11 @@
 }
 
 #score {
-position: absolute;
+    position: fixed;
     top: 10%;
     left: 50%;
-    z-index: 10;
-    color: black;
+    z-index: 6;
+    color: rgb(255, 255, 255);
     transform: translateX(-50%);
     font-weight: 600;
     font-size: 3.0rem;
@@ -43,7 +43,7 @@ position: absolute;
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: yellow;
+    background-color: rgb(28, 221, 255);
 }
 
 .pillars {
@@ -51,11 +51,11 @@ position: absolute;
     width: 150px;
     position: absolute;
     top: 0;
-    z-index: 5;
+    z-index: 3;
 }
 
 .pillar-top {
-    background-color: green;
+    background-color: rgb(120, 0, 175);
     position: absolute;
     top: 0;
     left: 0;
@@ -70,7 +70,7 @@ position: absolute;
 }
 
 .pillar-bottom {
-    background-color: green;
+    background-color: rgb(120, 0, 175);
     position: absolute;
     bottom: 0;
     left: 0;

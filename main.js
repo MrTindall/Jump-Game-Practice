@@ -10,6 +10,7 @@ let scoreValue = 0;
 let pillars = [];
 let intervalId;
 
+const gameContainer = document.querySelector('.game-container');
 const score = document.getElementById('score');
 const bird = document.getElementById("bird");
 const gravity = .5;
@@ -133,7 +134,7 @@ function createPillars() {
     pillarBottom.style.height = 40 - pillarOffset + 'vh';
     let pillarPassed = false;
 
-    document.body.appendChild(pillar);
+    gameContainer.appendChild(pillar);
     pillars.push(pillar);
 }
 
