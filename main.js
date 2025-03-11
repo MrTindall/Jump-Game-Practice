@@ -94,7 +94,7 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 }
 
-// Player controls (keydown and keyup)
+// Player controls (keydown)
 document.addEventListener('keydown', function (event) {
     if (!startGame && event.code === 'Space') {
         startGame = true;
@@ -106,6 +106,7 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
+// Player controls (keyup)
 document.addEventListener('keyup', function (event) {
     if (event.code === 'Space' && keydown) {
         keydown = false;
