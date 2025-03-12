@@ -33,7 +33,7 @@ function gameLoop(timestamp) {
     if (!dead) {
         if (startGame) {
             velocity += gravity;
-            positionY += velocity * deltaTime * 0.05;
+            positionY += velocity * (deltaTime / 16.67);
             bird.style.transform = `translateY(${positionY}px)`;
         }
 
@@ -46,7 +46,8 @@ function gameLoop(timestamp) {
             const pillarTopRect = pillarTop.getBoundingClientRect();
             const pillarBottomRect = pillarBottom.getBoundingClientRect();
 
-            pillar.pillarPositionX -= 10 * deltaTime * 0.05;
+            const timeScale = deltaTime / 16.67; // Normalize to 60 FPS
+            pillar.pillarPositionX -= 10 * timeScale;
             pillar.style.transform = `translateX(${pillar.pillarPositionX}px)`;
 
             // Remove pillar when it's off-screen
