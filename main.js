@@ -32,7 +32,7 @@ function gameLoop(timestamp) {
 
     if (!dead) {
         if (startGame) {
-            velocity += gravity;
+            velocity += gravity * (deltaTime / 16.67);
             positionY += velocity * (deltaTime / 16.67);
             bird.style.transform = `translateY(${positionY}px)`;
         }
