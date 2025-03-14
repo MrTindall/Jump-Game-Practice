@@ -39,16 +39,16 @@ html {
     font-size: 3.0rem;
     color: gold;
     z-index: 6;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
     text-shadow: 2px 2px 5px rgba(128, 108, 0, 0.7);
 }
 
 #score {
-    left: 33%;
+    left: 20%;
 }
 
 #high-score {
-    left: 66%;
+    right: 20%;
 }
 
 #bird {

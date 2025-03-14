@@ -81,7 +81,7 @@ function gameLoop(timestamp) {
         });
 
         // Update the high score
-        setHighScore(scoreValue); // Call setHighScore to check and update high score
+        setHighScore(scoreValue);
     }
 
     // Game over reset
@@ -178,10 +178,12 @@ setTimeout(() => {
 // Function to get and set high score
 function setHighScore(score) {
     let highScore = parseInt(window.localStorage.getItem("high-score")) || 0;
+
     if (score > highScore) {
-        window.localStorage.setItem('high-score', score); // Update localStorage if current score is higher
+        window.localStorage.setItem('high-score', score);
+        highScore = score;
     }
 
-    highScoreObject.innerHTML = `High Score: ${highScore}`; // Update high score display
+    highScoreObject.innerHTML = `High Score: ${highScore}`;
     return highScore;
 }
