@@ -37,9 +37,9 @@ html {
     top: 10%;
     font-weight: 600;
     font-size: 3.0rem;
-    color: rgb(255, 145, 1);
+    color: rgb(15, 15, 15);
     z-index: 6;
-    text-shadow: 0px 2px 20px rgba(255, 145, 1, 0.555);
+    text-shadow: 0px 0px 10px rgb(1, 238, 255);
 }
 
 #score {
