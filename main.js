@@ -88,7 +88,7 @@ function gameLoop(timestamp) {
     if (dead) {
         positionY = 0;
         velocity = 0;
-        scoreValue = 0; // Reset score to 0 after death
+        scoreValue = 0;
         bird.style.transform = `translateY(${positionY}px)`;
         resetPillars();
         startGame = false;
