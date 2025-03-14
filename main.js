@@ -12,8 +12,9 @@ let intervalId;
 
 const gameContainer = document.querySelector('.game-container');
 const score = document.getElementById('score');
+const highScoreObject = document.getElementById('high-score');
 const bird = document.getElementById("bird");
-const gravity = .5;
+const gravity = 0.5;
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
 
@@ -37,7 +38,7 @@ function gameLoop(timestamp) {
             bird.style.transform = `translateY(${positionY}px)`;
         }
 
-        score.innerHTML = `${scoreValue}`;
+        score.innerHTML = `Current Score: ${scoreValue}`;
 
         pillars.forEach(pillar => {
             const pillarTop = document.querySelector('.pillar-top');
@@ -78,13 +79,16 @@ function gameLoop(timestamp) {
                 pillar.pillarPassed = true;
             }
         });
+
+        // Update the high score
+        setHighScore(scoreValue); // Call setHighScore to check and update high score
     }
 
     // Game over reset
     if (dead) {
         positionY = 0;
         velocity = 0;
-        scoreValue = 0;
+        scoreValue = 0; // Reset score to 0 after death
         bird.style.transform = `translateY(${positionY}px)`;
         resetPillars();
         startGame = false;
@@ -170,3 +174,14 @@ setTimeout(() => {
         resetInterval();
     }
 }, 1500);
+
+// Function to get and set high score
+function setHighScore(score) {
+    let highScore = parseInt(window.localStorage.getItem("high-score")) || 0;
+    if (score > highScore) {
+        window.localStorage.setItem('high-score', score); // Update localStorage if current score is higher
+    }
+
+    highScoreObject.innerHTML = `High Score: ${highScore}`; // Update high score display
+    return highScore;
+}
