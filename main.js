@@ -13,7 +13,7 @@ let intervalId;
 const gameContainer = document.querySelector('.game-container');
 const score = document.getElementById('score');
 const highScoreObject = document.getElementById('high-score');
-const bird = document.getElementById("bird");
+const player = document.getElementById("player");
 const gravity = 0.5;
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
@@ -24,9 +24,9 @@ requestAnimationFrame(gameLoop);
 function gameLoop(timestamp) {
     let deltaTime = timestamp - lastTime;
     lastTime = timestamp;
-    const rect = bird.getBoundingClientRect();
+    const rect = player.getBoundingClientRect();
 
-    // Check for bird death (out of bounds)
+    // Check for player death (out of bounds)
     if (rect.bottom > windowHeight || rect.bottom < 0) {
         dead = true;
     }
@@ -35,7 +35,7 @@ function gameLoop(timestamp) {
         if (startGame) {
             velocity += gravity * (deltaTime / 16.67);
             positionY += velocity * (deltaTime / 16.67);
-            bird.style.transform = `translateY(${positionY}px)`;
+            player.style.transform = `translateY(${positionY}px)`;
         }
 
         score.innerHTML = `Current Score: ${scoreValue}`;
@@ -89,7 +89,7 @@ function gameLoop(timestamp) {
         positionY = 0;
         velocity = 0;
         scoreValue = 0;
-        bird.style.transform = `translateY(${positionY}px)`;
+        player.style.transform = `translateY(${positionY}px)`;
         resetPillars();
         startGame = false;
         dead = false;
