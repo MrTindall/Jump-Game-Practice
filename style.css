@@ -28,17 +28,26 @@ html {
     transform: translate(-50%, -50%);
     z-index: 3;
     overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+}
+
+#score,
+#high-score {
+    position: fixed;
+    top: 10%;
+    font-weight: 600;
+    font-size: 3.0rem;
+    color: gold;
+    z-index: 6;
+    text-shadow: 2px 2px 5px rgba(128, 108, 0, 0.7);
 }
 
 #score {
-    position: fixed;
-    top: 10%;
-    left: 50%;
-    z-index: 6;
-    color: rgb(255, 255, 255);
-    transform: translateX(-50%);
-    font-weight: 600;
-    font-size: 3.0rem;
+    left: 20%;
+}
+
+#high-score {
+    right: 20%;
 }
 
 #bird {
@@ -50,6 +59,7 @@ html {
     height: 50px;
     border-radius: 50%;
     background-color: rgb(100, 255, 28);
+    box-shadow: 0 0 10px 10px rgba(82, 255, 1, 0.3);
 }
 
 .pillars {
@@ -61,11 +71,12 @@ html {
 }
 
 .pillar-top {
-    background-color: rgb(155, 1, 226);
+    background-color: rgb(218, 138, 255);
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
+    box-shadow: 0 0 10px 10px rgba(218, 138, 255, 0.3);
 }
 
 .pillar-space {
@@ -76,11 +87,12 @@ html {
 }
 
 .pillar-bottom {
-    background-color: rgb(120, 0, 175);
+    background-color: rgb(218, 138, 255);
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
+    box-shadow: 0 0 10px 10px rgba(218, 138, 255, 0.3);
 }
 
 @media screen and (max-width: 600px) {
